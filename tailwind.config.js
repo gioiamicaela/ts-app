@@ -8,11 +8,9 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        image1: "url('/images/Albatross_vol009of055-050-0.jpg')",
       },
     },
+    plugins: [],
   },
-  plugins: [],
-}
+};

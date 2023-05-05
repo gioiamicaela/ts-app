@@ -17,9 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body
-        className={`${inter.className} flex flex-col items-center overflow-hidden`}
-      >
+      <body className={`${inter.className} flex flex-col items-center pt-3`}>
         <Navigation />
         {children}
         <Footer />
