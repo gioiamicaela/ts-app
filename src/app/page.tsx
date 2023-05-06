@@ -1,24 +1,20 @@
+'use client';
+import React, { useState } from 'react';
 import { Inter } from 'next/font/google';
-import Image from 'next/image';
-import { TextRegionTextLine, textRegionTextLines } from './data/data';
+import Rectangles from './components/Rectangles';
+import Popup from './components/Popup';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
+  const [show, setShow] = useState(false);
   return (
     <main
-      className={`${inter.className} h-[3743px] w-[2496px] bg-image1 bg-no-repeat bg-center bg-cover relative`}
+      className={`${inter.className} relative`}
+      style={{ position: 'relative' }}
     >
-      <div>
-        {textRegionTextLines.map((item: TextRegionTextLine) => {
-          return (
-            <div
-              className={`border-[#FF0000] border-solid border-2 absolute w-[${item.contour.exterior[1].x}px] h-[70px] start-[${item.contour.exterior[0].x}px] top-[${item.contour.exterior[0].y}px]`}
-              key={item.id}
-            ></div>
-          );
-        })}
-      </div>
+      <Rectangles />
+      {show && <Popup />}
     </main>
   );
 }
