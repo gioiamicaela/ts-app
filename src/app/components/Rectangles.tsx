@@ -1,6 +1,10 @@
 import { TextRegionTextLine, textRegionTextLines } from '../data/data';
 
-export default function Rectangles() {
+type Props = {
+  onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
+};
+
+export default function Rectangles(props: Props) {
   return (
     <div
       className={`h-[3743px] w-[2496px] bg-image1 bg-no-repeat bg-center bg-cover relative`}
@@ -8,6 +12,7 @@ export default function Rectangles() {
       {textRegionTextLines.map((item: TextRegionTextLine) => {
         return (
           <div
+            onClick={props.onClick}
             className={`absolute z-1 hover:border-sky-700 hover:border-dashed hover:border-8 border-[#FF0000] border-solid border-2`}
             key={item.id}
             style={{
