@@ -59,3 +59,10 @@ export const textRegionTextLines: TextRegionTextLine[] = Object.values(
 
 //console.log(textRegionTextLines);
 //console.log(JSON.stringify(textRegionTextLines[18].contour));
+
+export function updateJsonText(text: string, id: string) {
+  const textLine = textRegionTextLines.find((tl) => tl.id === id);
+  if (textLine) {
+    textLine.text = text;
+  }
+}
