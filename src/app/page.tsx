@@ -44,15 +44,15 @@ export default function Home() {
   };
 
   const handleUpdateData = async (id: string, text: string) => {
-    const res = await fetch('/api/hello/route.ts', {
+    const res = await fetch('/api/hello', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ id, text }),
     });
-    const { message } = await res.json();
-    console.log(message);
+    // const { message } = await res.json();
+    // console.log(message);
   };
 
   return (
