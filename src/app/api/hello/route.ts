@@ -3,11 +3,6 @@ import path from 'path';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextRequest } from 'next/server';
 
-interface Data {
-  id: string;
-  text: string;
-}
-
 export interface TextLine {
   id: string;
   baseline: { x: number; y: number }[];
