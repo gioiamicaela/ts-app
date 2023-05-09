@@ -1,18 +1,34 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Inter } from 'next/font/google';
 import Rectangles from './components/Rectangles';
 import DialogRadix from './components/DialogRadix';
-import { updateJsonText } from './data/data';
+import { TextRegionTextLine } from './api/hello/route';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
+  const [data, setData] = useState<TextRegionTextLine[]>([]);
   const [show, setShow] = useState(false);
   const [text, setText] = useState('');
   const [id, setId] = useState('');
   const [position, setPosition] = useState({ x: '50%', y: '25%' });
   const [updatedText, setUpdatedText] = useState(text);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/hello', {
+          method: 'GET',
+        });
+        const data = await response.json();
+        setData([data.data]);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleOpen = (text: string, id: string) => {
     setShow(true);
@@ -51,8 +67,24 @@ export default function Home() {
       },
       body: JSON.stringify({ id, text }),
     });
-    // const { message } = await res.json();
-    // console.log(message);
+  };
+
+  const updateJsonText = (id: string, text: string) => {
+    console.log('data', data);
+    const textLines =
+      data[0].text_regions['textregion_Albatross_vol009of055-050-0'].text_lines;
+    console.log(typeof textLines);
+    console.log('id', id);
+    console.log('text', text);
+    const textLineToUpdate = Object.values(textLines).find(
+      (textLine) => textLine.id === id
+    );
+
+    if (textLineToUpdate) {
+      textLineToUpdate.text = text;
+    }
+
+    setData([...data]);
   };
 
   return (
@@ -60,7 +92,7 @@ export default function Home() {
       className={`${inter.className} relative`}
       style={{ position: 'relative' }}
     >
-      <Rectangles onClick={(text, id) => handleOpen(text, id)} />
+      <Rectangles data={data} onClick={(text, id) => handleOpen(text, id)} />
       {show && (
         <DialogRadix
           show={show}

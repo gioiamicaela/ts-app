@@ -12,7 +12,7 @@ export const updateDialogText = async (dialog: DialogType): Promise<void> => {
   try {
     const data = await jsonfile.readFile('./Albatross_vol009of055-050-0.json');
 
-    const updatedData = data[0].text_regions[
+    const updatedData = data.text_regions[
       'textregion_Albatross_vol009of055-050-0'
     ].text_lines.map((item: DialogType) => {
       if (item.id === dialog.id) {

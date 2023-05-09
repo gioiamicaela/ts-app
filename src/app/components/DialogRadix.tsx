@@ -1,5 +1,6 @@
 import { Dialog } from '@radix-ui/react-dialog';
 import { DialogType } from '../data/dataServer';
+import { TextRegionTextLine } from '../api/hello/route';
 
 interface Props {
   show: boolean;
@@ -12,7 +13,7 @@ interface Props {
   };
   updatedText: string;
   setUpdatedText: (value: string) => void;
-  updateJsonText: (text: string, id: string) => void;
+  updateJsonText: (id: string, text: string) => void;
   id: string;
   handleUpdateData: (id: string, text: string) => void;
 }
@@ -52,7 +53,7 @@ export default function DialogRadix({
           <button
             onClick={() => {
               onOpenChange();
-              updateJsonText(updatedText, id);
+              updateJsonText(id, updatedText);
               handleUpdateData(id, updatedText);
             }}
           >

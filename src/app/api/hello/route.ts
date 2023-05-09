@@ -7,7 +7,8 @@ interface Data {
   id: string;
   text: string;
 }
-export interface TextRegionTextLine {
+
+export interface TextLine {
   id: string;
   baseline: { x: number; y: number }[];
   contour: {
@@ -18,15 +19,33 @@ export interface TextRegionTextLine {
   structure_type: string;
 }
 
+export interface TextRegion {
+  id: string;
+  contour: {
+    exterior: { x: number; y: number }[];
+    interiors: never[];
+  };
+  text_lines: {
+    [key: string]: TextLine;
+  };
+}
+
+export interface TextRegionTextLine {
+  image: { name: 'string'; height: number; width: number };
+  text_regions: {
+    [key: string]: TextRegion;
+  };
+}
+
 export function GET(req: NextApiRequest, res: NextApiResponse) {
   const filePath: string = path.join(
     process.cwd(),
-    'data',
+    'src/app/data',
     'Albatross_vol009of055-050-0.json'
   );
   const fileContents: string = fs.readFileSync(filePath, 'utf8');
-  const data: Data = JSON.parse(fileContents);
-  res.status(200).json({ data });
+  const data: TextRegionTextLine[] = JSON.parse(fileContents);
+  return new Response(JSON.stringify({ data }));
 }
 
 export async function POST(req: NextRequest) {
@@ -35,27 +54,22 @@ export async function POST(req: NextRequest) {
   const filePath: string = path.join(
     process.cwd(),
     'src/app/data',
-    'Albatross_vol009of055-050-0copy.json'
+    'Albatross_vol009of055-050-0.json'
   );
   const fileContents: string = fs.readFileSync(filePath, 'utf8');
-  const data: TextRegionTextLine[] = JSON.parse(fileContents);
-  const newData: TextRegionTextLine = {
-    id,
-    baseline: [], // reemplaza con un valor adecuado
-    contour: { exterior: [], interiors: [] }, // reemplaza con un valor adecuado
-    text: text,
-    structure_type: '', // reemplaza con un valor adecuado
-  };
-  console.log(data);
-  const newDataArray: TextRegionTextLine[] = data.map(
-    (d: TextRegionTextLine) => {
-      if (d.id === newData.id) {
-        return newData;
-      } else {
-        return d;
+  const data: TextRegionTextLine = JSON.parse(fileContents);
+
+  for (const regionId in data.text_regions) {
+    const region = data.text_regions[regionId];
+    for (const lineId in region.text_lines) {
+      const line = region.text_lines[lineId];
+      if (line.id === id) {
+        line.text = text;
+        break;
       }
     }
-  );
-  fs.writeFileSync(filePath, JSON.stringify(newDataArray, null, 2), 'utf8');
+  }
+
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
   return new Response(JSON.stringify({ message: 'Text updated' }));
 }
