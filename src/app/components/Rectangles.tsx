@@ -8,7 +8,7 @@ import {
 
 interface RectangleProps {
   data: TextRegionTextLine[];
-  onClick: (text: string, id: string) => void;
+  onClick: (text: string, id: string, type: string) => void;
 }
 
 export default function Rectangles(props: RectangleProps) {
@@ -23,7 +23,9 @@ export default function Rectangles(props: RectangleProps) {
               (textLine: TextLine) => {
                 return (
                   <div
-                    onClick={() => props.onClick(textLine.text, textLine.id)}
+                    onClick={() =>
+                      props.onClick(textLine.text, textLine.id, 'text')
+                    }
                     className={`absolute z-1 hover:border-sky-700 hover:border-dashed hover:border-8 border-[#FF0000] border-solid border-2`}
                     key={textLine.id}
                     style={{
@@ -56,7 +58,7 @@ export default function Rectangles(props: RectangleProps) {
                     return (
                       <div
                         onClick={() =>
-                          props.onClick(textLine.text, textLine.id)
+                          props.onClick(textLine.text, textLine.id, 'table')
                         }
                         className={`absolute z-1 hover:border-sky-700 hover:border-dashed hover:border-8 border-[#FF0000] border-solid border-2`}
                         key={textLine.id}

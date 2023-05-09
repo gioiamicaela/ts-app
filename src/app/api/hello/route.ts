@@ -77,7 +77,8 @@ export function GET(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export async function POST(req: NextRequest) {
-  const { id, text }: { id: string; text: string } = await req.json();
+  const { id, text, type }: { id: string; text: string; type: string } =
+    await req.json();
 
   const filePath: string = path.join(
     process.cwd(),
@@ -86,14 +87,28 @@ export async function POST(req: NextRequest) {
   );
   const fileContents: string = fs.readFileSync(filePath, 'utf8');
   const data: TextRegionTextLine = JSON.parse(fileContents);
-
-  for (const regionId in data.text_regions) {
-    const region = data.text_regions[regionId];
-    for (const lineId in region.text_lines) {
-      const line = region.text_lines[lineId];
-      if (line.id === id) {
-        line.text = text;
-        break;
+  if (type === 'text') {
+    for (const regionId in data.text_regions) {
+      const region = data.text_regions[regionId];
+      for (const lineId in region.text_lines) {
+        const line = region.text_lines[lineId];
+        if (line.id === id) {
+          line.text = text;
+          break;
+        }
+      }
+    }
+  } else if (type === 'table') {
+    for (const regionId in data.table_regions) {
+      const region = data.table_regions[regionId];
+      for (const cellId in region.table_cells) {
+        const cell = region.table_cells[cellId];
+        for (const textLineId in cell.text_lines) {
+          const textLine = cell.text_lines[textLineId];
+          if (textLine.id === id) {
+            textLine.text = text;
+          }
+        }
       }
     }
   }

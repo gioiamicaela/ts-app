@@ -11,9 +11,11 @@ interface Props {
   };
   updatedText: string;
   setUpdatedText: (value: string) => void;
-  updateJsonText: (id: string, text: string) => void;
+  setType: (value: string) => void;
+  updateJsonText: (id: string, text: string, type: string) => void;
   id: string;
-  handleUpdateData: (id: string, text: string) => void;
+  handleUpdateData: (id: string, text: string, type: string) => void;
+  type: string;
 }
 
 export default function DialogRadix({
@@ -24,9 +26,11 @@ export default function DialogRadix({
   position,
   updatedText,
   setUpdatedText,
+  setType,
   updateJsonText,
   id,
   handleUpdateData,
+  type,
 }: Props) {
   return (
     <>
@@ -60,8 +64,8 @@ export default function DialogRadix({
                 className='bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white mr-1'
                 onClick={() => {
                   onOpenChange();
-                  updateJsonText(id, updatedText);
-                  handleUpdateData(id, updatedText);
+                  updateJsonText(id, updatedText, type);
+                  handleUpdateData(id, updatedText, type);
                 }}
               >
                 Save

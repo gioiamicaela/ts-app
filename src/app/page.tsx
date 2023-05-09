@@ -12,6 +12,7 @@ export default function Home() {
   const [show, setShow] = useState(false);
   const [text, setText] = useState('');
   const [id, setId] = useState('');
+  const [type, setType] = useState('');
   const [position, setPosition] = useState({ x: '50%', y: '25%' });
   const [updatedText, setUpdatedText] = useState(text);
 
@@ -30,12 +31,13 @@ export default function Home() {
     fetchData();
   }, []);
 
-  const handleOpen = (text: string, id: string) => {
+  const handleOpen = (text: string, id: string, type: string) => {
     setShow(true);
     setText(text);
     setId(id);
     setUpdatedText(text);
     setPosition({ x: '50%', y: '25%' });
+    setType(type);
   };
 
   const handleClose = () => {
@@ -59,29 +61,40 @@ export default function Home() {
     document.removeEventListener('mouseup', handleDragEnd);
   };
 
-  const handleUpdateData = async (id: string, text: string) => {
+  const handleUpdateData = async (id: string, text: string, type: string) => {
     const res = await fetch('/api/hello', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id, text }),
+      body: JSON.stringify({ id, text, type }),
     });
   };
 
-  const updateJsonText = (id: string, text: string) => {
-    console.log('data', data);
-    const textLines =
-      data[0].text_regions['textregion_Albatross_vol009of055-050-0'].text_lines;
-    console.log(typeof textLines);
-    console.log('id', id);
-    console.log('text', text);
-    const textLineToUpdate = Object.values(textLines).find(
-      (textLine) => textLine.id === id
-    );
-
-    if (textLineToUpdate) {
-      textLineToUpdate.text = text;
+  const updateJsonText = (id: string, text: string, type: string) => {
+    if (type === 'text') {
+      const textLines =
+        data[0].text_regions['textregion_Albatross_vol009of055-050-0']
+          .text_lines;
+      const textLineToUpdate = Object.values(textLines).find(
+        (textLine) => textLine.id === id
+      );
+      if (textLineToUpdate) {
+        textLineToUpdate.text = text;
+      }
+    } else if (type === 'table') {
+      for (const regionId in data[0].table_regions) {
+        const region = data[0].table_regions[regionId];
+        for (const cellId in region.table_cells) {
+          const cell = region.table_cells[cellId];
+          for (const textLineId in cell.text_lines) {
+            const textLine = cell.text_lines[textLineId];
+            if (textLine.id === id) {
+              textLine.text = text;
+            }
+          }
+        }
+      }
     }
 
     setData([...data]);
@@ -92,7 +105,10 @@ export default function Home() {
       className={`${inter.className} relative`}
       style={{ position: 'relative' }}
     >
-      <Rectangles data={data} onClick={(text, id) => handleOpen(text, id)} />
+      <Rectangles
+        data={data}
+        onClick={(text, id, type) => handleOpen(text, id, type)}
+      />
 
       {show && (
         <DialogRadix
@@ -102,6 +118,8 @@ export default function Home() {
           onMouseDown={handleDragStart}
           position={position}
           updatedText={updatedText}
+          type={type}
+          setType={setType}
           setUpdatedText={setUpdatedText}
           updateJsonText={updateJsonText}
           id={id}
