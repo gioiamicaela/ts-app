@@ -93,6 +93,7 @@ export default function Home() {
       style={{ position: 'relative' }}
     >
       <Rectangles data={data} onClick={(text, id) => handleOpen(text, id)} />
+
       {show && (
         <DialogRadix
           show={show}

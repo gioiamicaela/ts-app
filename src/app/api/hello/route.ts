@@ -25,10 +25,43 @@ export interface TextRegion {
   };
 }
 
+export interface TableCell {
+  id: string;
+  row: number;
+  row_span: number;
+  column: number;
+  column_span: number;
+  orientation: number;
+  contour: {
+    exterior: { x: number; y: number }[];
+    interiors: never[];
+  };
+  text_lines: {
+    [key: string]: TextLine;
+  };
+}
+
+export interface TableRegion {
+  id: string;
+  contour: {
+    exterior: { x: number; y: number }[];
+    interiors: never[];
+  };
+  order: {
+    inner_order: string[];
+  };
+  table_cells: {
+    [key: string]: TableCell;
+  };
+}
+
 export interface TextRegionTextLine {
   image: { name: 'string'; height: number; width: number };
   text_regions: {
     [key: string]: TextRegion;
+  };
+  table_regions: {
+    [key: string]: TableRegion;
   };
 }
 
