@@ -36,58 +36,6 @@ function Footer() {
             </div>
           </div>
         </div>
-
-        <div className='columns-2 lg:columns-4 max-w-[120px] pl-0'>
-          <div className='row pt-5 lg:pt-0'>
-            <h4 className='mb-[15px] not-italic font-semibold text-xl leading-6 text-white h-[24px] w-[51px]'>
-              Docs
-            </h4>
-            <h5 className='mb-[15px] not-italic font-normal text-base leading-5 text-[#d0d0d0] h-[24px]'>
-              Developers
-            </h5>
-            <h5 className='mb-[15px] not-italic font-normal text-base leading-5 text-[#d0d0d0] h-[24px]'>
-              GitHub
-            </h5>
-            <h5 className='mb-[15px] not-italic font-normal text-base leading-5 text-[#d0d0d0] h-[24px]'>
-              White Paper
-            </h5>
-            <h5 className='mb-[15px] not-italic font-normal text-base leading-5 text-[#d0d0d0] h-[24px]'>
-              Branding
-            </h5>
-          </div>
-        </div>
-        <div className='columns-2 lg:columns-4 max-w-[128px] pl-0'>
-          <div className='row pt-5 lg:pt-0'>
-            <h4 className='mb-[15px] not-italic font-semibold text-xl leading-6 text-white h-[24px] w-[51px]'>
-              Governance
-            </h4>
-            <h5 className='mb-[15px] not-italic font-normal text-base leading-5 text-[#d0d0d0] h-[24px]'>
-              Treasury
-            </h5>
-            <h5 className='mb-[15px] not-italic font-normal text-base leading-5 text-[#d0d0d0] h-[24px]'>
-              Voting
-            </h5>
-            <h5 className='mb-[15px] not-italic font-normal text-base leading-5 text-[#d0d0d0] h-[24px]'>
-              Delegate
-            </h5>
-            <h5 className='mb-[15px] not-italic font-normal text-base leading-5 text-[#d0d0d0] h-[24px]'>
-              Forum
-            </h5>
-          </div>
-        </div>
-        <div className='columns-2 lg:columns-4 max-w-[128px] pl-0'>
-          <div className='row pt-5 lg:pt-0'>
-            <h4 className='mb-[15px] not-italic font-semibold text-xl leading-6 text-white h-[24px] w-[51px]'>
-              About
-            </h4>
-            <h5 className='mb-[15px] not-italic font-normal text-base leading-5 text-[#d0d0d0] h-[24px]'>
-              Security
-            </h5>
-            <h5 className='mb-[15px] not-italic font-normal text-base leading-5 text-[#d0d0d0] h-[24px]'>
-              Blog
-            </h5>
-          </div>
-        </div>
       </div>
     </footer>
   );
