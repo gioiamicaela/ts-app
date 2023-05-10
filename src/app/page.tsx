@@ -15,6 +15,8 @@ export default function Home() {
   const [type, setType] = useState('');
   const [position, setPosition] = useState({ x: '50%', y: '25%' });
   const [updatedText, setUpdatedText] = useState(text);
+  const [isSelected, setIsSelected] = useState(false);
+  const [selectedId, setSelectedId] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +43,9 @@ export default function Home() {
   };
 
   const handleClose = () => {
+    setIsSelected(false);
     setShow(false);
+    setSelectedId('');
   };
 
   const handleDrag = (e: MouseEvent) => {
@@ -100,6 +104,10 @@ export default function Home() {
     setData([...data]);
   };
 
+  const toggleSelected = () => {
+    setIsSelected(!isSelected);
+  };
+
   return (
     <main
       className={`${inter.className} relative`}
@@ -108,6 +116,10 @@ export default function Home() {
       <Rectangles
         data={data}
         onClick={(text, id, type) => handleOpen(text, id, type)}
+        toggleSelected={toggleSelected}
+        isSelected={isSelected}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
       />
 
       {show && (

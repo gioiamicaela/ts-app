@@ -9,6 +9,15 @@ import {
 interface RectangleProps {
   data: TextRegionTextLine[];
   onClick: (text: string, id: string, type: string) => void;
+  toggleSelected: () => void;
+  isSelected: boolean;
+  selectedId: string;
+  setSelectedId: (id: string) => void;
+}
+
+interface Vertex {
+  x: number;
+  y: number;
 }
 
 export default function Rectangles(props: RectangleProps) {
@@ -21,12 +30,41 @@ export default function Rectangles(props: RectangleProps) {
           (textRegion: TextRegion) => {
             return Object.values(textRegion.text_lines).map(
               (textLine: TextLine) => {
+                const vertex: Vertex[] = [
+                  {
+                    x: 0,
+                    y: 0,
+                  },
+                  {
+                    x:
+                      textLine.contour.exterior[1].x -
+                      textLine.contour.exterior[0].x,
+                    y: 0,
+                  },
+                  {
+                    x: 0,
+                    y:
+                      textLine.contour.exterior[2].y -
+                      textLine.contour.exterior[0].y,
+                  },
+                  {
+                    x:
+                      textLine.contour.exterior[1].x -
+                      textLine.contour.exterior[0].x,
+                    y:
+                      textLine.contour.exterior[2].y -
+                      textLine.contour.exterior[0].y,
+                  },
+                ];
+
                 return (
                   <div
-                    onClick={() =>
-                      props.onClick(textLine.text, textLine.id, 'text')
-                    }
-                    className={`absolute z-1 hover:border-sky-700 hover:border-dashed hover:border-8 border-[#FF0000] border-solid border-2`}
+                    onClick={() => {
+                      props.onClick(textLine.text, textLine.id, 'text');
+                      props.toggleSelected();
+                      props.setSelectedId(textLine.id);
+                    }}
+                    className={`absolute z-1 hover:border-sky-700 hover:border-dashed  border-[#FF0000] border-solid border-2`}
                     key={textLine.id}
                     style={{
                       position: 'absolute',
@@ -36,9 +74,27 @@ export default function Rectangles(props: RectangleProps) {
                         textLine.contour.exterior[1].x -
                         textLine.contour.exterior[0].x
                       }px`,
-                      height: '70px',
+                      height: `${
+                        textLine.contour.exterior[2].y -
+                        textLine.contour.exterior[0].y
+                      }px`,
                     }}
-                  ></div>
+                  >
+                    {props.isSelected &&
+                      props.selectedId === textLine.id &&
+                      vertex.map((vertex: Vertex, index: number) => {
+                        return (
+                          <div
+                            key={index}
+                            className='absolute w-3 h-3 bg-red-500 rounded-full'
+                            style={{
+                              top: `${vertex.y - 3}px`,
+                              left: `${vertex.x - 3}px`,
+                            }}
+                          ></div>
+                        );
+                      })}
+                  </div>
                 );
               }
             );
@@ -55,12 +111,40 @@ export default function Rectangles(props: RectangleProps) {
                 }
                 return Object.values(tableCell.text_lines).map(
                   (textLine: TextLine) => {
+                    const vertex: Vertex[] = [
+                      {
+                        x: 0,
+                        y: 0,
+                      },
+                      {
+                        x:
+                          textLine.contour.exterior[1].x -
+                          textLine.contour.exterior[0].x,
+                        y: 0,
+                      },
+                      {
+                        x: 0,
+                        y:
+                          textLine.contour.exterior[2].y -
+                          textLine.contour.exterior[0].y,
+                      },
+                      {
+                        x:
+                          textLine.contour.exterior[1].x -
+                          textLine.contour.exterior[0].x,
+                        y:
+                          textLine.contour.exterior[2].y -
+                          textLine.contour.exterior[0].y,
+                      },
+                    ];
                     return (
                       <div
-                        onClick={() =>
-                          props.onClick(textLine.text, textLine.id, 'table')
-                        }
-                        className={`absolute z-1 hover:border-sky-700 hover:border-dashed hover:border-8 border-[#FF0000] border-solid border-2`}
+                        onClick={() => {
+                          props.onClick(textLine.text, textLine.id, 'table');
+                          props.toggleSelected();
+                          props.setSelectedId(textLine.id);
+                        }}
+                        className={`absolute z-1 hover:border-sky-700 hover:border-dashed border-[#FF0000] border-solid border-2`}
                         key={textLine.id}
                         style={{
                           position: 'absolute',
@@ -70,9 +154,27 @@ export default function Rectangles(props: RectangleProps) {
                             textLine.contour.exterior[1].x -
                             textLine.contour.exterior[0].x
                           }px`,
-                          height: '70px',
+                          height: `${
+                            textLine.contour.exterior[2].y -
+                            textLine.contour.exterior[0].y
+                          }px`,
                         }}
-                      ></div>
+                      >
+                        {props.isSelected &&
+                          props.selectedId === textLine.id &&
+                          vertex.map((vertex: Vertex, index: number) => {
+                            return (
+                              <div
+                                key={index}
+                                className='absolute w-3 h-3 bg-red-500 rounded-full'
+                                style={{
+                                  top: `${vertex.y - 3}px`,
+                                  left: `${vertex.x - 3}px`,
+                                }}
+                              ></div>
+                            );
+                          })}
+                      </div>
                     );
                   }
                 );
