@@ -5,6 +5,8 @@ import {
   TableCell,
   TableRegion,
 } from '../api/hello/route';
+import Vertex from './Vertex';
+import { useEffect, useState } from 'react';
 
 interface RectangleProps {
   data: TextRegionTextLine[];
@@ -20,7 +22,19 @@ interface Vertex {
   y: number;
 }
 
+interface RectangleState {
+  vertices: Vertex[];
+}
+
 export default function Rectangles(props: RectangleProps) {
+  const [state, setState] = useState<RectangleState>({ vertices: [] });
+
+  function handleVertexMove(index: number, x: number, y: number) {
+    const vertices = [...state.vertices];
+    vertices[index] = { x, y };
+    setState({ ...state, vertices });
+  }
+
   return (
     <div
       className={`h-[3743px] w-[2496px] bg-image1 bg-no-repeat bg-center bg-cover relative`}
@@ -80,7 +94,7 @@ export default function Rectangles(props: RectangleProps) {
                       }px`,
                     }}
                   >
-                    {props.isSelected &&
+                    {/* {props.isSelected &&
                       props.selectedId === textLine.id &&
                       vertex.map((vertex: Vertex, index: number) => {
                         return (
@@ -93,7 +107,18 @@ export default function Rectangles(props: RectangleProps) {
                             }}
                           ></div>
                         );
-                      })}
+                      })} */}
+                    {props.isSelected &&
+                      props.selectedId === textLine.id &&
+                      vertex.map((vertex: Vertex, index: number) => (
+                        <Vertex
+                          key={index}
+                          index={index} // incluir el índice del vértice
+                          x={vertex.x}
+                          y={vertex.y}
+                          onVertexMove={handleVertexMove}
+                        />
+                      ))}
                   </div>
                 );
               }
@@ -160,7 +185,7 @@ export default function Rectangles(props: RectangleProps) {
                           }px`,
                         }}
                       >
-                        {props.isSelected &&
+                        {/* {props.isSelected &&
                           props.selectedId === textLine.id &&
                           vertex.map((vertex: Vertex, index: number) => {
                             return (
@@ -173,7 +198,18 @@ export default function Rectangles(props: RectangleProps) {
                                 }}
                               ></div>
                             );
-                          })}
+                          })} */}
+                        {props.isSelected &&
+                          props.selectedId === textLine.id &&
+                          vertex.map((vertex: Vertex, index: number) => (
+                            <Vertex
+                              key={index}
+                              index={index} // incluir el índice del vértice
+                              x={vertex.x}
+                              y={vertex.y}
+                              onVertexMove={handleVertexMove}
+                            />
+                          ))}
                       </div>
                     );
                   }
