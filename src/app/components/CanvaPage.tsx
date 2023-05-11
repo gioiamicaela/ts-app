@@ -12,6 +12,7 @@ interface CanvasPageProps {
   width: number;
   height: number;
   onClick: () => void;
+  id: string;
 }
 
 function CanvasPage(props: CanvasPageProps) {
@@ -23,11 +24,11 @@ function CanvasPage(props: CanvasPageProps) {
   ]);
 
   useEffect(() => {
-    const savedVertices = localStorage.getItem('vertices');
+    const savedVertices = localStorage.getItem(`canvasVertices-${props.id}`);
     if (savedVertices) {
       setVertices(JSON.parse(savedVertices));
     }
-  }, []);
+  }, [props.id]);
 
   const handleVertexDrag = (index: number, event: any) => {
     const newVertices = [...vertices];
@@ -36,8 +37,11 @@ function CanvasPage(props: CanvasPageProps) {
   };
 
   useEffect(() => {
-    localStorage.setItem('vertices', JSON.stringify(vertices));
-  }, [vertices]);
+    localStorage.setItem(
+      `canvasVertices-${props.id}`,
+      JSON.stringify(vertices)
+    );
+  }, [vertices, props.id]);
 
   return (
     <Stage

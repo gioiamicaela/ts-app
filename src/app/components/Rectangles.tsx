@@ -75,6 +75,7 @@ export default function Rectangles(props: RectangleProps) {
                           textLine.contour.exterior[1].x -
                           textLine.contour.exterior[0].x
                         }
+                        id={textLine.id}
                         height={
                           textLine.contour.exterior[2].y -
                           textLine.contour.exterior[0].y
@@ -141,6 +142,7 @@ export default function Rectangles(props: RectangleProps) {
                               textLine.contour.exterior[1].x -
                               textLine.contour.exterior[0].x
                             }
+                            id={textLine.id}
                             height={
                               textLine.contour.exterior[2].y -
                               textLine.contour.exterior[0].y
