@@ -62,7 +62,7 @@ function CanvasPage(props: CanvasPageProps) {
             key={index}
             x={vertex.x}
             y={vertex.y}
-            radius={5}
+            radius={10}
             fill='red'
             draggable
             onDragMove={(event) => handleVertexDrag(index, event)}
