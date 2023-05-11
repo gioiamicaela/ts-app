@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Stage, Layer, Line, Circle, Rect } from 'react-konva';
+import React, { useState, useEffect } from 'react';
+import { Stage, Layer, Line, Circle } from 'react-konva';
 
 interface Vertex {
   x: number;
@@ -22,11 +22,22 @@ function CanvasPage(props: CanvasPageProps) {
     { x: props.x, y: props.y + props.height },
   ]);
 
+  useEffect(() => {
+    const savedVertices = localStorage.getItem('vertices');
+    if (savedVertices) {
+      setVertices(JSON.parse(savedVertices));
+    }
+  }, []);
+
   const handleVertexDrag = (index: number, event: any) => {
     const newVertices = [...vertices];
     newVertices[index] = { x: event.target.x(), y: event.target.y() };
     setVertices(newVertices);
   };
+
+  useEffect(() => {
+    localStorage.setItem('vertices', JSON.stringify(vertices));
+  }, [vertices]);
 
   return (
     <Stage

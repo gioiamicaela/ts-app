@@ -5,8 +5,6 @@ import {
   TableCell,
   TableRegion,
 } from '../api/hello/route';
-import Vertex from './Vertex';
-import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 const DynamicCanvasPage = dynamic(() => import('./CanvaPage'), {
@@ -32,14 +30,6 @@ interface RectangleState {
 }
 
 export default function Rectangles(props: RectangleProps) {
-  const [state, setState] = useState<RectangleState>({ vertices: [] });
-
-  function handleVertexMove(index: number, x: number, y: number) {
-    const vertices = [...state.vertices];
-    vertices[index] = { x, y };
-    setState({ ...state, vertices });
-  }
-
   return (
     <div
       className={`h-[3743px] w-[2496px] bg-image1 bg-no-repeat bg-center bg-cover relative`}
