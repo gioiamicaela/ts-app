@@ -1,9 +1,10 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Inter } from 'next/font/google';
 import Rectangles from './components/Rectangles';
 import DialogRadix from './components/DialogRadix';
 import { TextRegionTextLine } from './api/hello/route';
+import ZoomableComponent from './components/ZoomableComponent';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -109,35 +110,37 @@ export default function Home() {
   };
 
   return (
-    <main
-      className={`${inter.className} relative`}
-      style={{ position: 'relative' }}
-    >
-      <Rectangles
-        data={data}
-        onClick={(text, id, type) => handleOpen(text, id, type)}
-        toggleSelected={toggleSelected}
-        isSelected={isSelected}
-        selectedId={selectedId}
-        setSelectedId={setSelectedId}
-      />
-
-      {show && (
-        <DialogRadix
-          show={show}
-          onOpenChange={handleClose}
-          text={text}
-          onMouseDown={handleDragStart}
-          position={position}
-          updatedText={updatedText}
-          type={type}
-          setType={setType}
-          setUpdatedText={setUpdatedText}
-          updateJsonText={updateJsonText}
-          id={id}
-          handleUpdateData={handleUpdateData}
+    <ZoomableComponent>
+      <main
+        className={`${inter.className} relative`}
+        style={{ position: 'relative' }}
+      >
+        <Rectangles
+          data={data}
+          onClick={(text, id, type) => handleOpen(text, id, type)}
+          toggleSelected={toggleSelected}
+          isSelected={isSelected}
+          selectedId={selectedId}
+          setSelectedId={setSelectedId}
         />
-      )}
-    </main>
+
+        {show && (
+          <DialogRadix
+            show={show}
+            onOpenChange={handleClose}
+            text={text}
+            onMouseDown={handleDragStart}
+            position={position}
+            updatedText={updatedText}
+            type={type}
+            setType={setType}
+            setUpdatedText={setUpdatedText}
+            updateJsonText={updateJsonText}
+            id={id}
+            handleUpdateData={handleUpdateData}
+          />
+        )}
+      </main>
+    </ZoomableComponent>
   );
 }
