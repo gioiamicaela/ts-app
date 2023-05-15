@@ -29,6 +29,7 @@
     "react-draggable": "^4.4.5",
     "react-icons": "^4.8.0",
     "react-konva": "^18.2.8",
+    "react-zoom-pan-pinch": "^3.0.7",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4"
   },
