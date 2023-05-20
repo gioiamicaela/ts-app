@@ -41,7 +41,7 @@ export default function Rectangles(props: RectangleProps) {
             return Object.values(textRegion.text_lines).map(
               (textLine: TextLine) => {
                 return (
-                  <>
+                  <div key={textLine.id}>
                     {props.selectedId !== textLine.id && (
                       <div
                         onClick={() => {
@@ -69,6 +69,7 @@ export default function Rectangles(props: RectangleProps) {
 
                     {props.isSelected && props.selectedId === textLine.id && (
                       <DynamicCanvasPage
+                        key={textLine.id}
                         x={textLine.contour.exterior[0].x}
                         y={textLine.contour.exterior[0].y}
                         width={
@@ -87,7 +88,7 @@ export default function Rectangles(props: RectangleProps) {
                         }}
                       />
                     )}
-                  </>
+                  </div>
                 );
               }
             );
@@ -105,7 +106,7 @@ export default function Rectangles(props: RectangleProps) {
                 return Object.values(tableCell.text_lines).map(
                   (textLine: TextLine) => {
                     return (
-                      <>
+                      <div key={textLine.id}>
                         {props.selectedId !== textLine.id && (
                           <div
                             onClick={() => {
@@ -136,6 +137,7 @@ export default function Rectangles(props: RectangleProps) {
                         )}
                         {props.selectedId === textLine.id && (
                           <DynamicCanvasPage
+                            key={textLine.id}
                             x={textLine.contour.exterior[0].x}
                             y={textLine.contour.exterior[0].y}
                             width={
@@ -158,7 +160,7 @@ export default function Rectangles(props: RectangleProps) {
                             }}
                           />
                         )}
-                      </>
+                      </div>
                     );
                   }
                 );
